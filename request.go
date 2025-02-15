@@ -52,12 +52,14 @@ type HttpResponse interface {
 	Status(code int, text ...string) HttpResponse
 }
 
-type HttpHandler interface {
-	Route() string
-	Handle(in HttpRequest, out HttpResponse)
+type HttpHandler struct {
+	Route  string
+	Handle func(in HttpRequest, out HttpResponse)
 }
 
 type Module interface {
+	Name() string
 	ID() string
+	BasePath() string
 	HttpHandlers() []HttpHandler
 }
