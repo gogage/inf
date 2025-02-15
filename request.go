@@ -54,6 +54,7 @@ type HttpResponse interface {
 
 type HttpHandler struct {
 	Route  string
+	Method string
 	Handle func(in HttpRequest, out HttpResponse)
 }
 
