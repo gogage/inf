@@ -25,8 +25,9 @@ type Value interface {
 	Bool(defaultValue ...bool) bool
 	Bools() []bool
 	Object(defaultValue ...Getter) Getter
-	Objects() []Getter
+	Objects() []Value
 	Marshal(output interface{}) error
+	ToJson() string
 }
 
 type Getter interface {
@@ -53,14 +54,16 @@ type HttpResponse interface {
 }
 
 type HttpHandler struct {
-	Route  string
-	Method string
-	Handle func(in HttpRequest, out HttpResponse)
+	Route         string
+	Method        string
+	Documentation string
+	Handle        func(in HttpRequest, out HttpResponse)
 }
 
 type Module interface {
-	Name() string
 	ID() string
+	Name() string
 	BasePath() string
+	Browsable() bool
 	HttpHandlers() []HttpHandler
 }
